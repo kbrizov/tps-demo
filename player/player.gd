@@ -1,3 +1,4 @@
+class_name Player
 extends KinematicBody
 
 const CAMERA_MOUSE_ROTATION_SPEED = 0.001
@@ -157,9 +158,8 @@ func _physics_process(delta):
 			var bullet = preload("res://player/bullet/bullet.tscn").instance()
 			get_parent().add_child(bullet)
 			bullet.global_transform.origin = shoot_origin
-			bullet.direction = shoot_dir
 			# If we don't rotate the bullets there is no useful way to control the particles ..
-			bullet.look_at(bullet.global_transform.origin + shoot_dir, Vector3.UP)
+			bullet.look_at(shoot_origin + shoot_dir, Vector3.UP)
 			bullet.add_collision_exception_with(self)
 			var shoot_particle = $PlayerModel/Robot_Skeleton/Skeleton/GunBone/ShootFrom/ShootParticle
 			shoot_particle.restart()
@@ -219,3 +219,7 @@ func rotate_camera(move):
 	camera_x_rot += move.y
 	camera_x_rot = clamp(camera_x_rot, deg2rad(CAMERA_X_ROT_MIN), deg2rad(CAMERA_X_ROT_MAX))
 	camera_rot.rotation.x = camera_x_rot
+
+
+func add_camera_shake_trauma(amount):
+	camera_camera.add_trauma(amount)
